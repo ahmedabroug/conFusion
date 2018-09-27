@@ -1,7 +1,7 @@
 <div class="container" fxLayout="column" fxLayoutGap="10px">
   <div fxFlex>
     <div>
-      <h3>Menu</h3>
+      <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
       <hr>
     </div>
   </div>
@@ -14,6 +14,10 @@
         </mat-grid-tile-footer>
       </mat-grid-tile>
     </mat-grid-list>
+  </div>
+  <div [hidden]="dishes" fxFlex>
+    <mat-spinner></mat-spinner>
+    <h4>Loading . . . Please Wait</h4>
   </div>
 
 
