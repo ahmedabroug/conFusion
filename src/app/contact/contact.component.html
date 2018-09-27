@@ -37,7 +37,24 @@
               <mat-error *ngIf="feedbackForm.get('email').hasError('required') && feedbackForm.get('email').touched">Email ID is required</mat-error>
             </mat-form-field>
           </p>
-        <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
+        <table class="form-size">
+          <td>
+            <mat-slide-toggle formControlName="agree">May we contact you?</mat-slide-toggle>
+          </td>
+          <td>
+            <mat-select placeholder="How?" formControlName="contacttype">
+              <mat-option *ngFor="let ctype of contactType" [value]="ctype">
+                {{ ctype }}
+              </mat-option>
+            </mat-select>
+          </td>
+          </table>
+        <p>
+          <mat-form-field class="full-width">
+            <textarea matInput formControlName="message" placeholder="Your Feedback" rows=12></textarea>
+          </mat-form-field>
+        </p>
+        <button type="submit" [disabled]="feedbackForm.invalid" mat-button class="background-primary text-floral-white">Submit</button>
       </form>
     </div>
 
