@@ -4,7 +4,7 @@ import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 
-import { ActivatedRoute,Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
@@ -23,9 +23,10 @@ export class DishdetailComponent implements OnInit {
   prev: number;
   next: number;
   commentForm: FormGroup;
-  comment:Comment;
+  comment: Comment;
   dishErrMess: string;
-  
+  dishcopy = null;
+
 
   @ViewChild('cform') commentFormDirective;
 
@@ -53,28 +54,28 @@ export class DishdetailComponent implements OnInit {
     private location: Location,
     private fb: FormBuilder,
     @Inject('BaseURL') private BaseURL) {
-      this.createForm();
-     }
-    
+    this.createForm();
+  }
+
 
   ngOnInit() {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(+params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
-      errmess => this.dishErrMess = <any>errmess);
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        errmess => { this.dish = null; this.dishErrMess = <any>errmess });
   }
 
   createForm() {
     this.commentForm = this.fb.group({
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       rating: 5,
-      comment:['' , [Validators.required, Validators.minLength(2), Validators.maxLength(500)]]
+      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]]
     });
 
     this.commentForm.valueChanges
-    .subscribe(data => this.onValueChanged(data));
+      .subscribe(data => this.onValueChanged(data));
 
-  this.onValueChanged(); // (re)set validation messages now
+    this.onValueChanged(); // (re)set validation messages now
   }
 
   onValueChanged(data?: any) {
@@ -104,6 +105,9 @@ export class DishdetailComponent implements OnInit {
     let date = now.toISOString();
     this.comment.date = date;
     this.dish.comments.push(this.comment);
+    this.dishcopy.comments.push(this.comment);
+    this.dishcopy.save()
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); });
     console.log(this.comment);
     this.commentForm.reset({
       author: '',
