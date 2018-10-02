@@ -39,6 +39,9 @@ import { baseURL } from './shared/baseurl';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
 
+import { RestangularModule, Restangular } from 'ngx-restangular';
+import { RestangularConfigFactory } from './shared/restConfig';
+
 
 @NgModule({
   declarations: [
@@ -72,6 +75,7 @@ import { LoginComponent } from './login/login.component';
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
+    RestangularModule.forRoot(RestangularConfigFactory),
     HttpClientModule
   ],
   entryComponents: [
