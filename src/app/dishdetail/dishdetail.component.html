@@ -77,11 +77,11 @@
   </div>
 
 
-  <div *ngIf="dishErrMess">
+  <div *ngIf="dishErrMess" class="centerspin">
     <h2>Error</h2>
     <h4>{{dishErrMess}}</h4>
   </div>
-  <div [hidden]="dish || dishErrMess" fxFlex>
+  <div fxLayoutAlign="center" [hidden]="dish || dishErrMess">
     <mat-spinner></mat-spinner>
     <h4>Loading . . . Please Wait</h4>
   </div>
