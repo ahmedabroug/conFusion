@@ -81,7 +81,7 @@
     <h2>Error</h2>
     <h4>{{dishErrMess}}</h4>
   </div>
-  <div fxLayoutAlign="center" [hidden]="dish || dishErrMess">
+  <div [hidden]="dish || dishErrMess">
     <mat-spinner></mat-spinner>
     <h4>Loading . . . Please Wait</h4>
   </div>
