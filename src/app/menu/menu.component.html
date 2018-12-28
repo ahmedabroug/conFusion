@@ -1,11 +1,5 @@
 <div class="container" fxLayout="column" fxLayoutGap="10px">
   <div fxFlex>
-    <div>
-      <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
-      <hr>
-    </div>
-  </div>
-  <div fxFlex>
     <mat-grid-list cols="2" rowHeight="200px">
       <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]" appHighlight [@expand]>
         <img height="200px" src="{{BaseURL + dish.image}}" alt={{dish.name}}>
